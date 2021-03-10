@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class RepositoryDAO {
     private static final RepositoryDAO instance = new RepositoryDAO();
-    private static final String FILE_NAME = "animals.";
+    private static final String FILE_NAME = "animals";
     private ObjectMapper objectMapper;
     private File file;
 

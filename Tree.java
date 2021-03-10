@@ -1,5 +1,7 @@
 package animals;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Tree {
@@ -80,5 +82,25 @@ public class Tree {
         } else { //We get to the leaf (animal) like dog, cat etc. so traverse is finished
             return t;
         }
+    }
+
+    private List<String> listAnimalsTraverse(Node t) {
+        List<String> arrayList = new ArrayList<>();
+
+        if (t == null) {
+            return arrayList;
+        }else if (!t.isQuestion()) {
+            arrayList.add(
+                    formatter.getNameOfAnimalWithoutArticle(
+                            t.getValue()));
+        } else {
+            arrayList.addAll(listAnimalsTraverse(t.getLeft()));
+            arrayList.addAll(listAnimalsTraverse(t.getRight()));
+        }
+        return arrayList;
+    }
+
+    public List<String> listAllAnimals() {
+        return listAnimalsTraverse(root);
     }
 }

@@ -2,6 +2,12 @@ package animals;
 
 public class Formatter {
 
+    private static final Formatter instance = new Formatter();
+
+    public static Formatter getInstance() {
+        return instance;
+    }
+
     public String getNameOfAnimalWithArticle(String animal) {
         String input = animal.trim().toLowerCase();
         if (input.matches("(a|an)\\s\\w+")) {
