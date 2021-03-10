@@ -27,9 +27,10 @@ public class Tree {
             System.out.println("I give up. What animal do you have in mind?");
             String newAnimal =
                     formatter.getNameOfAnimalWithArticle(
-                            scanner.nextLine().trim().toLowerCase());
+                            scanner.nextLine());
             String oldAnimal =
-                    formatter.getNameOfAnimalWithArticle(leaf.getValue());
+                    formatter.getNameOfAnimalWithArticle(
+                            leaf.getValue());
 
             //Below it just gets a new generated question and side, on which
             //we should add a newAnimal
@@ -54,8 +55,8 @@ public class Tree {
                     right = new Node(oldAnimal, newQuestion);
                     break;
                 case "right":
-                    right = new Node(newAnimal, newQuestion);
                     left = new Node(oldAnimal, newQuestion);
+                    right = new Node(newAnimal, newQuestion);
                     break;
                 default:
                     left = null;

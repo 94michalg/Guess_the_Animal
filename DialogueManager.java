@@ -53,7 +53,7 @@ public class DialogueManager {
     }
 
     // Returns array of Strings, where array[0] is generated question,
-    // array[1] is "right" or "left", it means on which side of new Node we should
+    // array[1] is "right" or "left", it means on which side of the Node we should
     // put a new animal
     public String[] getFact(String firstAnimal, String secondAnimal) {
         System.out.printf("Specify a fact that distinguishes %s from %s.\n",
@@ -109,7 +109,7 @@ public class DialogueManager {
         }
         System.out.println("I can distinguish these animals by asking the question:");
         String question = formatter.distinguishQuestion(canHasIs, fact);
-        System.out.printf("- %s\n", question);
+        System.out.println("- " + question);
         return new String[]{question, leftOrRight};
     }
 }

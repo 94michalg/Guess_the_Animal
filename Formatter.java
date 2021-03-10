@@ -3,16 +3,17 @@ package animals;
 public class Formatter {
 
     public String getNameOfAnimalWithArticle(String animal) {
-        if (animal.matches("(a|an)\\s\\w+")) {
+        String input = animal.trim().toLowerCase();
+        if (input.matches("(a|an)\\s\\w+")) {
             return animal;
         } else {
-            return animal.matches("^[aeiou]\\w+") ?
+            return input.matches("^[aeiou]\\w+") ?
                     "an " + animal : "a " + animal;
         }
     }
 
     public String getNameOfAnimalWithoutArticle(String animal) {
-        return animal.replaceAll(
+        return animal.trim().toLowerCase().replaceAll(
                 "(\\s|\\ban\\b|\\ba\\b|\\bthe\\b)", "");
     }
 

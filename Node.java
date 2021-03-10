@@ -32,7 +32,7 @@ public class Node {
     }
 
     public Node(String value, Node parent) {
-        this.value = value;
+        this.value = value.trim().toLowerCase();
         this.parent = parent;
         this.left = null;
         this.right = null;
