@@ -57,8 +57,8 @@ public class DialogueManager {
     // put a new animal
     public String[] getFact(Node firstAnimal, Node secondAnimal) {
         System.out.printf("Specify a fact that distinguishes %s from %s.\n",
-                formatter.getNameOfAnimalWithArticle(firstAnimal),
-                formatter.getNameOfAnimalWithArticle(secondAnimal));
+                formatter.getNameOfAnimalWithArticle(firstAnimal.getValue()),
+                formatter.getNameOfAnimalWithArticle(secondAnimal.getValue()));
         System.out.println("The sentence should satisfy one of the following templates:\n" +
                 "- It can ...\n" +
                 "- It has ...\n" +
@@ -75,37 +75,44 @@ public class DialogueManager {
                             " - It is a mammal\n" +
                             "Specify a fact that distinguishes %s from %s.\n" +
                             "The sentence should be of the format: 'It can/has/is ...'.\n",
-                    formatter.getNameOfAnimalWithArticle(firstAnimal),
-                    formatter.getNameOfAnimalWithArticle(secondAnimal));
+                    formatter.getNameOfAnimalWithArticle(firstAnimal.getValue()),
+                    formatter.getNameOfAnimalWithArticle(secondAnimal.getValue()));
             matcher = pattern.matcher(scanner.nextLine());
         }
         String canHasIs = matcher.group(1);
         String fact = matcher.group(2);
         System.out.printf("Is the statement correct for %s?\n",
-                formatter.getNameOfAnimalWithArticle(secondAnimal));
+                formatter.getNameOfAnimalWithArticle(secondAnimal.getValue()));
         String leftOrRight;
         if (getUserAnswer()) {
             leftOrRight = "right";
             System.out.println("I have learned the following facts about animals:");
             System.out.printf("- The %s %s %s.\n",
-                    formatter.getNameOfAnimalWithoutArticle(firstAnimal),
+                    formatter.getNameOfAnimalWithoutArticle(firstAnimal.getValue()),
                     formatter.canHasIsNegative(canHasIs),
                     fact);
+            firstAnimal.addNewFact("It " + formatter.canHasIsNegative(canHasIs) + " " + fact);
             System.out.printf("- The %s %s %s.\n",
-                    formatter.getNameOfAnimalWithoutArticle(secondAnimal),
+                    formatter.getNameOfAnimalWithoutArticle(secondAnimal.getValue()),
                     canHasIs,
                     fact);
+            secondAnimal.addNewFact("It " + canHasIs + " " + fact);
+
         } else  {
             leftOrRight = "left";
             System.out.println("I have learned the following facts about animals:");
             System.out.printf("- The %s %s %s.\n",
-                    formatter.getNameOfAnimalWithoutArticle(firstAnimal),
+                    formatter.getNameOfAnimalWithoutArticle(firstAnimal.getValue()),
                     canHasIs,
                     fact);
+            firstAnimal.addNewFact("It " + canHasIs + " " + fact);
+
             System.out.printf("- The %s %s %s.\n",
-                    formatter.getNameOfAnimalWithoutArticle(secondAnimal),
+                    formatter.getNameOfAnimalWithoutArticle(secondAnimal.getValue()),
                     formatter.canHasIsNegative(canHasIs),
                     fact);
+            secondAnimal.addNewFact("It " + formatter.canHasIsNegative(canHasIs) + " " + fact);
+
         }
         System.out.println("I can distinguish these animals by asking the question:");
         String question = formatter.distinguishQuestion(canHasIs, fact);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -39,6 +40,17 @@ public class Node {
         this.parent = parent;
         this.left = null;
         this.right = null;
+        this.facts = new ArrayList<>();
+    }
+
+    public void addNewFact(String fact) {
+        facts.add(fact);
+    }
+
+    public void printFacts() {
+        for (String s: facts) {
+            System.out.println("- " + s);
+        }
     }
 
     //Created for proper loading from File

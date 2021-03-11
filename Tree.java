@@ -23,18 +23,18 @@ public class Tree {
 
     public void startPlaying() {
         List<String> facts = new ArrayList<>();
-        Node leaf = traverse(root, facts); //It starts playing and finishes at question "Is it a dog?"
+        Node oldAnimal = traverse(root, facts); //It starts playing and finishes at question "Is it a dog?"
         System.out.println(" ");
         if (dialogs.getUserAnswer()) { //we won, nothing changes in the tree
             System.out.println("I won!");
         } else {        //we lost, we have to ask question and change the tree
             System.out.println("I give up. What animal do you have in mind?");
-            String newAnimal =
+            Node newAnimal = new Node(
                     formatter.getNameOfAnimalWithArticle(
-                            scanner.nextLine());
-            String oldAnimal =
-                    formatter.getNameOfAnimalWithArticle(
-                            leaf.getValue());
+                            scanner.nextLine()), null);
+//            String oldAnimal =
+//                    formatter.getNameOfAnimalWithArticle(
+//                            leaf.getValue());
 
             //Below it just gets a new generated question and side, on which
             //we should add a newAnimal
@@ -42,33 +42,37 @@ public class Tree {
             Node newQuestion;
             String newFact = array[0];
             String leftOrRight = array[1];
-            if (leaf.getParent() == null) {
+            if (oldAnimal.getParent() == null) {
                 newQuestion = new Node(newFact, null);
                 root = newQuestion;
-            } else if (leaf.getParent().getLeft() == leaf) {
-                newQuestion = new Node(newFact, leaf.getParent());
-                leaf.getParent().setLeft(newQuestion);
+            } else if (oldAnimal.getParent().getLeft() == oldAnimal) {
+                newQuestion = new Node(newFact, oldAnimal.getParent());
+                oldAnimal.getParent().setLeft(newQuestion);
             } else {
-                newQuestion = new Node(newFact, leaf.getParent());
-                leaf.getParent().setRight(newQuestion);
+                newQuestion = new Node(newFact, oldAnimal.getParent());
+                oldAnimal.getParent().setRight(newQuestion);
             }
-            Node left, right;
+//            Node left, right;
             switch (leftOrRight) {
                 case "left":
-                    left = new Node(newAnimal, newQuestion);
-                    right = new Node(oldAnimal, newQuestion);
+//                    left = new Node(newAnimal, newQuestion);
+//                    right = new Node(oldAnimal, newQuestion);
+                    newQuestion.setLeft(newAnimal);
+                    newQuestion.setRight(oldAnimal);
                     break;
                 case "right":
-                    left = new Node(oldAnimal, newQuestion);
-                    right = new Node(newAnimal, newQuestion);
+//                    left = new Node(oldAnimal, newQuestion);
+                    newQuestion.setLeft(oldAnimal);
+                    newQuestion.setRight(newAnimal);
+//                    right = new Node(newAnimal, newQuestion);
                     break;
                 default:
-                    left = null;
-                    right = null;
+                    newQuestion.setLeft(null);
+                    newQuestion.setRight(null);
                     break;
             }
-            newQuestion.setLeft(left);
-            newQuestion.setRight(right);
+//            newQuestion.setLeft(left);
+//            newQuestion.setRight(right);
         }
     }
 
@@ -145,6 +149,13 @@ public class Tree {
 
     private int totalNumberOfNodes(Node t) {
         int count = 1;
+        if(!t.isQuestion()) {
+            System.out.println("#############");
+            System.out.println("ANIMAL: " + t.getValue());
+            t.printFacts();
+            System.out.println("###############");
+            System.out.println();
+        }
         if (t.getLeft() != null) {
             count += totalNumberOfNodes(t.getLeft());
         }
