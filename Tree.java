@@ -1,8 +1,6 @@
 package animals;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Tree {
     private Node root;
@@ -22,7 +20,7 @@ public class Tree {
     }
 
     public void startPlaying() {
-        List<String> facts = new ArrayList<>();
+        Set<String> facts = new HashSet<>();
         Node oldAnimal = traverse(root, facts); //It starts playing and finishes at question "Is it a dog?"
         System.out.println(" ");
         if (dialogs.getUserAnswer()) { //we won, nothing changes in the tree
@@ -42,6 +40,7 @@ public class Tree {
             Node newQuestion;
             String newFact = array[0];
             String leftOrRight = array[1];
+
             if (oldAnimal.getParent() == null) {
                 newQuestion = new Node(newFact, null);
                 root = newQuestion;
@@ -52,6 +51,10 @@ public class Tree {
                 newQuestion = new Node(newFact, oldAnimal.getParent());
                 oldAnimal.getParent().setRight(newQuestion);
             }
+
+            oldAnimal.setParent(newQuestion);
+            newAnimal.setParent(newQuestion);
+            newAnimal.addAllToFacts(facts);
 //            Node left, right;
             switch (leftOrRight) {
                 case "left":
@@ -76,7 +79,46 @@ public class Tree {
         }
     }
 
-    private Node traverse(Node t, List<String> facts) {
+    public Node searchForAnimal(String name, Node t) {
+        if (t != null) {
+            String nameOfNode = t.getValue();
+            if (nameOfNode.matches("(a|an)\\s" + name)) {
+                return t;
+            } else {
+                Node foundNode = searchForAnimal(name, t.getLeft());
+                if (foundNode == null) {
+                    foundNode = searchForAnimal(name, t.getRight());
+                }
+                return foundNode;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public boolean searchAndPrint(String name, Node t, Map<String, Boolean> mapOfFacts) {
+        if (t == null) {
+            return false;
+        }
+
+        String nameOfNode = t.getValue();
+        if (nameOfNode.matches("(a|an)\\s" + name)) {
+            return true;
+        }
+
+        if (searchAndPrint(name, t.getLeft(), mapOfFacts)) {
+            mapOfFacts.put(t.getValue(), false);
+            return true;
+        }
+
+        if (searchAndPrint(name, t.getRight(), mapOfFacts)) {
+            mapOfFacts.put(t.getValue(), true);
+            return true;
+        }
+        return false;
+    }
+
+    private Node traverse(Node t, Set<String> facts) {
         t. askQuestion();
         if (t.isQuestion()) { //Means that it is a question and node has children, we continue
             boolean choice = dialogs.getUserAnswer();
@@ -115,7 +157,8 @@ public class Tree {
     public void printStatistics() {
         System.out.println("The Knowledge Tree stats\n" +
                 "");
-        System.out.println("- root node " + root.getValue());
+        System.out.println("- root node " +
+                formatter.getFact(root.getValue(), true));
         int numberOfNodes = totalNumberOfNodes(root);
         System.out.println("- total number of nodes " + numberOfNodes);
         int numberOfStatements = numberOfStatements(root);
@@ -123,11 +166,11 @@ public class Tree {
         System.out.println("- total number of animals " + numberOfAnimals);
         System.out.println("- total number of statements " + numberOfStatements);
         int maxDepth = maxDepth(root);
-        int height = maxDepth + 1;
+        int height = maxDepth;
         System.out.println("- height of the tree " + height);
         int minDepth = minDepth(root);
         System.out.println("- minimum animal's depth " + minDepth);
-        System.out.println("- maximum animal's depth " + maxDepth);
+        System.out.println("- average animal's depth " + (double)sumOfDepthOfLeaves(root, 0)/numberOfAnimals);
 
     }
 
@@ -136,6 +179,17 @@ public class Tree {
             return -1;
         } else {
             return 1 + Math.max(maxDepth(t.getLeft()), maxDepth(t.getRight()));
+        }
+    }
+
+    private int sumOfDepthOfLeaves(Node t, int depth) {
+        if (t == null) {
+            return 0;
+        } else if(!t.isQuestion()) {
+            return depth;
+        } else {
+            return sumOfDepthOfLeaves(t.getLeft(), depth + 1) +
+                    sumOfDepthOfLeaves(t.getRight(), depth + 1);
         }
     }
 
@@ -149,13 +203,6 @@ public class Tree {
 
     private int totalNumberOfNodes(Node t) {
         int count = 1;
-        if(!t.isQuestion()) {
-            System.out.println("#############");
-            System.out.println("ANIMAL: " + t.getValue());
-            t.printFacts();
-            System.out.println("###############");
-            System.out.println();
-        }
         if (t.getLeft() != null) {
             count += totalNumberOfNodes(t.getLeft());
         }

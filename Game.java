@@ -1,8 +1,6 @@
 package animals;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
 
@@ -51,6 +49,23 @@ public class Game {
                         }
                         break;
                     case 3:
+                        System.out.println("Your choice:");
+                        System.out.println("3");
+                        System.out.println("Enter the animal:");
+                        String animalToFind = scanner.nextLine().trim().toLowerCase();
+                        Map<String, Boolean> facts = new LinkedHashMap<>();
+                        boolean found = tree.searchAndPrint(animalToFind, tree.getRoot(), facts);
+                        if (!found) {
+                            System.out.printf("No facts about the %s.", animalToFind);
+                        } else {
+                            System.out.printf("Facts about the %s:\n", animalToFind);
+                            List<String> reverseOrderedKeys = new ArrayList<String>(facts.keySet());
+                            Collections.reverse(reverseOrderedKeys);
+                            for (String s: reverseOrderedKeys) {
+                                System.out.printf("- %s.\n",
+                                        new Formatter().getFact(s, facts.get(s)));
+                            }
+                        }
                         break;
                     case 4:
                         tree.printStatistics();

@@ -56,7 +56,7 @@ public class Formatter {
         matcher.find();
         String firstPart = matcher.group(1);
         String fact = matcher.group(2);
-        StringBuilder sb = new StringBuilder("- ");
+        StringBuilder sb = new StringBuilder();
         switch (firstPart) {
             case "Can it":
                 sb.append("It can");
@@ -69,7 +69,6 @@ public class Formatter {
                 break;
         }
         sb.append(fact);
-        sb.append(".");
         return sb.toString();
     }
 
@@ -79,7 +78,7 @@ public class Formatter {
         matcher.find();
         String firstPart = matcher.group(1);
         String fact = matcher.group(2);
-        StringBuilder sb = new StringBuilder("- ");
+        StringBuilder sb = new StringBuilder();
         switch (firstPart) {
             case "Can it":
                 sb.append("It can't");
@@ -92,7 +91,41 @@ public class Formatter {
                 break;
         }
         sb.append(fact);
-        sb.append(".");
+        return sb.toString();
+    }
+
+    public String getFact(String question, boolean isTrue) {
+        Pattern pattern = Pattern.compile("^(Can it|Does it have|Is it)([^?]*)");
+        Matcher matcher = pattern.matcher(question);
+        StringBuilder sb = new StringBuilder();
+        if (matcher.find()) {
+            if (isTrue) {
+                switch (matcher.group(1)) {
+                    case "Can it":
+                        sb.append("It can");
+                        break;
+                    case "Does it have":
+                        sb.append("It have");
+                        break;
+                    case "Is it":
+                        sb.append("It is");
+                        break;
+                }
+            } else {
+                switch (matcher.group(1)) {
+                    case "Can it":
+                        sb.append("It can't");
+                        break;
+                    case "Does it have":
+                        sb.append("It doesn't have");
+                        break;
+                    case "Is it":
+                        sb.append("It isn't");
+                        break;
+                }
+            }
+            sb.append(matcher.group(2));
+        }
         return sb.toString();
     }
 }

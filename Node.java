@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIdentityInfo(
@@ -19,7 +19,7 @@ public class Node {
     private Node parent;
     private Node left;
     private Node right;
-    private List<String> facts;
+    private Set<String> facts;
 
     @JsonIgnore
     public boolean isQuestion() {
@@ -40,16 +40,20 @@ public class Node {
         this.parent = parent;
         this.left = null;
         this.right = null;
-        this.facts = new ArrayList<>();
+        this.facts = new HashSet<>();
     }
 
     public void addNewFact(String fact) {
         facts.add(fact);
     }
 
+    public void addAllToFacts(Set<String> newSet) {
+        facts.addAll(newSet);
+    }
+
     public void printFacts() {
         for (String s: facts) {
-            System.out.println("- " + s);
+            System.out.printf("- %s.\n", s);
         }
     }
 
@@ -64,6 +68,10 @@ public class Node {
 
     public Node getParent() {
         return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
     }
 
     public Node getLeft() {
