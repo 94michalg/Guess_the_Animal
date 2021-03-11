@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static DialogueManager dialogs = new DialogueManager();
-    private static Scanner scanner = new Scanner(System.in);
+    private static final DialogueManager dialogs = new DialogueManager();
+    private static final Scanner scanner = new Scanner(System.in);
 
     public void start() {
         dialogs.getGreeting();
@@ -22,7 +22,7 @@ public class Game {
         }
         Tree tree = new Tree(root);
 
-        System.out.println("Welcome to the animal expert system!\n");
+        System.out.println("Welcome to the animal expert system!");
         int choice = dialogs.getChoice();
         do {
             switch (choice) {
@@ -47,6 +47,15 @@ public class Game {
                     for (String s: animalsList) {
                         System.out.println("- " + s);
                     }
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    tree.printStatistics();
+                    break;
+                case 5:
+                    break;
+                default:
                     break;
             }
             choice = dialogs.getChoice();

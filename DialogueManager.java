@@ -114,7 +114,7 @@ public class DialogueManager {
     }
 
     public int getChoice() {
-        System.out.println("What do you want to do?\n");
+        System.out.println("\nWhat do you want to do?\n");
         System.out.println("1. Play the guessing game\n" +
                 "2. List of all animals\n" +
                 "3. Search for an animal\n" +

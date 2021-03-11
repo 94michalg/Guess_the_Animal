@@ -103,4 +103,64 @@ public class Tree {
     public List<String> listAllAnimals() {
         return listAnimalsTraverse(root);
     }
+
+    public void printStatistics() {
+        System.out.println("The Knowledge Tree stats\n" +
+                "");
+        System.out.println("- root node " + root.getValue());
+        int numberOfNodes = totalNumberOfNodes(root);
+        System.out.println("- total number of nodes " + numberOfNodes);
+        int numberOfStatements = numberOfStatements(root);
+        int numberOfAnimals = numberOfNodes - numberOfStatements;
+        System.out.println("- total number of animals " + numberOfAnimals);
+        System.out.println("- total number of statements " + numberOfStatements);
+        int maxDepth = maxDepth(root);
+        int height = maxDepth + 1;
+        System.out.println("- height of the tree " + height);
+        int minDepth = minDepth(root);
+        System.out.println("- minimum animal's depth " + minDepth);
+        System.out.println("- maximum animal's depth " + maxDepth);
+
+    }
+
+    private int maxDepth(Node t) {
+        if (t == null) {
+            return -1;
+        } else {
+            return 1 + Math.max(maxDepth(t.getLeft()), maxDepth(t.getRight()));
+        }
+    }
+
+    private int minDepth(Node t) {
+        if (t == null) {
+            return -1;
+        } else {
+            return 1 + Math.min(minDepth(t.getLeft()), minDepth(t.getRight()));
+        }
+    }
+
+    private int totalNumberOfNodes(Node t) {
+        int count = 1;
+        if (t.getLeft() != null) {
+            count += totalNumberOfNodes(t.getLeft());
+        }
+        if (t.getRight() != null) {
+            count += totalNumberOfNodes(t.getRight());
+        }
+        return count;
+    }
+
+    private int numberOfStatements(Node t) {
+        if (!t.isQuestion()) {
+            return 0;
+        }
+        int count = 1;
+        if (t.getLeft() != null) {
+            count += numberOfStatements(t.getLeft());
+        }
+        if (t.getRight() != null) {
+            count += numberOfStatements(t.getRight());
+        }
+        return count;
+    }
 }
