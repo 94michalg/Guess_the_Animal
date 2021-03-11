@@ -22,7 +22,9 @@ public class Tree {
     }
 
     public void startPlaying() {
-        Node leaf = traverse(root); //It starts playing and finishes at question "Is it a dog?"
+        List<String> facts = new ArrayList<>();
+        Node leaf = traverse(root, facts); //It starts playing and finishes at question "Is it a dog?"
+        System.out.println(" ");
         if (dialogs.getUserAnswer()) { //we won, nothing changes in the tree
             System.out.println("I won!");
         } else {        //we lost, we have to ask question and change the tree
@@ -70,14 +72,16 @@ public class Tree {
         }
     }
 
-    private Node traverse(Node t) {
+    private Node traverse(Node t, List<String> facts) {
         t. askQuestion();
         if (t.isQuestion()) { //Means that it is a question and node has children, we continue
             boolean choice = dialogs.getUserAnswer();
             if (choice) {
-                return traverse(t.getRight());
+                facts.add(formatter.getPositiveFact(t.getValue()));
+                return traverse(t.getRight(), facts);
             } else {
-                return traverse(t.getLeft());
+                facts.add(formatter.getNegativeFact(t.getValue()));
+                return traverse(t.getLeft(), facts);
             }
         } else { //We get to the leaf (animal) like dog, cat etc. so traverse is finished
             return t;
@@ -162,5 +166,18 @@ public class Tree {
             count += numberOfStatements(t.getRight());
         }
         return count;
+    }
+
+    public void print() {
+        preorderTraversePrint(root);
+    }
+
+    private void preorderTraversePrint(Node t) {
+        if (t == null) {
+            return;
+        }
+        System.out.println(t.getValue());
+        preorderTraversePrint(t.getLeft());
+        preorderTraversePrint(t.getRight());
     }
 }

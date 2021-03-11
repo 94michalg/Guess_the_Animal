@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.IntSequenceGenerator.class,
@@ -16,6 +18,7 @@ public class Node {
     private Node parent;
     private Node left;
     private Node right;
+    private List<String> facts;
 
     @JsonIgnore
     public boolean isQuestion() {

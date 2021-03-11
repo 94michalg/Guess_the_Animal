@@ -55,7 +55,7 @@ public class DialogueManager {
     // Returns array of Strings, where array[0] is generated question,
     // array[1] is "right" or "left", it means on which side of the Node we should
     // put a new animal
-    public String[] getFact(String firstAnimal, String secondAnimal) {
+    public String[] getFact(Node firstAnimal, Node secondAnimal) {
         System.out.printf("Specify a fact that distinguishes %s from %s.\n",
                 formatter.getNameOfAnimalWithArticle(firstAnimal),
                 formatter.getNameOfAnimalWithArticle(secondAnimal));
@@ -121,11 +121,16 @@ public class DialogueManager {
                 "4. Calculate statistics\n" +
                 "5. Print the Knowledge Tree\n" +
                 "0. Exit");
-        int choice = Integer.parseInt(scanner.nextLine());
-        if (choice < 0 || choice > 5) {
+        try {
+            int choice = Integer.parseInt(scanner.nextLine());
+            if (choice < 0 || choice > 5) {
+                System.out.println("Wrong choice! Try again");
+                return getChoice();
+            }
+            return choice;
+        } catch (NumberFormatException e) {
             System.out.println("Wrong choice! Try again");
             return getChoice();
         }
-        return choice;
     }
 }
