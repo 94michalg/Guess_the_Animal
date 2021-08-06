@@ -1,0 +1,114 @@
+{
+  "id" : 1,
+  "value" : "Can it climb trees?",
+  "left" : {
+    "id" : 2,
+    "value" : "Is it a fish?",
+    "parent" : 1,
+    "left" : {
+      "id" : 3,
+      "value" : "Can it crawl?",
+      "parent" : 2,
+      "left" : {
+        "id" : 4,
+        "value" : "Does it have big trunk?",
+        "parent" : 3,
+        "left" : {
+          "id" : 5,
+          "value" : "Is it from australia?",
+          "parent" : 4,
+          "left" : {
+            "id" : 6,
+            "value" : "Does it have wings?",
+            "parent" : 5,
+            "left" : {
+              "id" : 7,
+              "value" : "Is it a rodent?",
+              "parent" : 6,
+              "left" : {
+                "id" : 8,
+                "value" : "a dog",
+                "parent" : 7
+              },
+              "right" : {
+                "id" : 9,
+                "value" : "a hamster",
+                "parent" : 7
+              }
+            },
+            "right" : {
+              "id" : 10,
+              "value" : "an owl",
+              "parent" : 6
+            }
+          },
+          "right" : {
+            "id" : 11,
+            "value" : "a kangaroo",
+            "parent" : 5
+          }
+        },
+        "right" : {
+          "id" : 12,
+          "value" : "an elephant",
+          "parent" : 4
+        }
+      },
+      "right" : {
+        "id" : 13,
+        "value" : "a snake",
+        "parent" : 3
+      }
+    },
+    "right" : {
+      "id" : 14,
+      "value" : "Is it enormous?",
+      "parent" : 2,
+      "left" : {
+        "id" : 15,
+        "value" : "a shark",
+        "parent" : 14
+      },
+      "right" : {
+        "id" : 16,
+        "value" : "a whale",
+        "parent" : 14
+      }
+    }
+  },
+  "right" : {
+    "id" : 17,
+    "value" : "Can it eat nuts?",
+    "parent" : 1,
+    "left" : {
+      "id" : 18,
+      "value" : "Is it humanoid?",
+      "parent" : 17,
+      "left" : {
+        "id" : 19,
+        "value" : "a cat",
+        "parent" : 18
+      },
+      "right" : {
+        "id" : 20,
+        "value" : "a monkey",
+        "parent" : 18
+      }
+    },
+    "right" : {
+      "id" : 21,
+      "value" : "Does it have thick fur?",
+      "parent" : 17,
+      "left" : {
+        "id" : 22,
+        "value" : "a squirrel",
+        "parent" : 21
+      },
+      "right" : {
+        "id" : 23,
+        "value" : "a bear",
+        "parent" : 21
+      }
+    }
+  }
+}
