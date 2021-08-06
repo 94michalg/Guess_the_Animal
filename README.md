@@ -17,18 +17,22 @@ To make a negative reply type: `n`, `no`, `nah`, `nope`, `no way`, `negative`.
 These are just sample answers, program understands some more complex answers too.
 
 To start playing just choose 1st option. The program will start to ask you some questions and in the end it will guess the animal. If it's right you lost and the tree stays untouched. If you won it will ask you for your answer and try to learn how to distinguish these two animals e.g.
+
 ![Distinguish question](/images/distinguish.JPG)
 
 The sentence should satisfy on the following templates: "It can ...", "It has ..." or "It is ..." e.g. "It is a mammal". As you play the knowledge tree grows bigger and the program becomes smarter.
 
 To list all of the animals choose 2nd option:
+
 ![List animals](/images/list.JPG)
 
 The 3rd option lets you to list all of the known facts about particular animal:
+
 ![Facts about particular animal](/images/facts.JPG)
 
 Last two options lets you to print the tree (for now as a plain text) or print all statistics of the tree:
+
 ![Statistics](/images/statistics.JPG)
-
-
 ## To do
+* Improve tree printing (add some edges, pointers and indents)
+* Add support for other language (e.g. Esperanto) using ResourceBundles
