@@ -3,6 +3,7 @@
 * [General info](#general-info)
 * [Setup](#setup)
 * [How to use](#how-to-use)
+* [To do](#to-do)
 ## General info
 Project is a simple interactive game based on a binary tree structure. The computer try to guess the animal that the user has in mind with the help of "yes" or "no" questions. During the game, the computer extends its knowledge by learning new facts about animals and use these informations in the next game.
 ## Setup
