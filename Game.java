@@ -29,18 +29,18 @@ public class Game {
         int choice = dialogs.getChoice();
         while (choice != 0) {
             switch (choice) {
-                case 1:
+                case 1: // Play
                     do {
                         System.out.println("You think of an animal, and I guess it.");
                         System.out.println("Press enter when you're ready.");
                         scanner.nextLine();
-                        tree.startPlaying();
+                        tree.startPlaying(); //Play the game and save changes
                         System.out.println("Nice! I've learned so much about animals!");
                         System.out.println();
                         System.out.println("Would you like to play again?");
                     } while (dialogs.getUserAnswer());
                     break;
-                case 2:
+                case 2: // List all animals
                     System.out.println("Your choice:\n" +
                             "2\n" +
                             "Here are the animals I know:");
@@ -51,7 +51,7 @@ public class Game {
                         System.out.println("- " + s);
                     }
                     break;
-                case 3:
+                case 3: // Print all the facts about particular animal
                     System.out.println("Your choice:");
                     System.out.println("3");
                     System.out.println("Enter the animal:");
@@ -70,10 +70,10 @@ public class Game {
                         }
                     }
                     break;
-                case 4:
+                case 4: // Print tree statistics
                     tree.printStatistics();
                     break;
-                case 5:
+                case 5: // Print the tree
                     tree.print();
                     break;
                 default:
