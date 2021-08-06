@@ -19,9 +19,9 @@ public class Tree {
         return root;
     }
 
+    // Play the game
     public void startPlaying() {
-        Set<String> facts = new HashSet<>();
-        Node oldAnimal = traverse(root, facts); //It starts playing and finishes at question "Is it a dog?"
+        Node oldAnimal = traverse(root); //It starts playing and finishes at question "Is it a dog?"
         System.out.println(" ");
         if (dialogs.getUserAnswer()) { //we won, nothing changes in the tree
             System.out.println("I won!");
@@ -30,18 +30,16 @@ public class Tree {
             Node newAnimal = new Node(
                     formatter.getNameOfAnimalWithArticle(
                             scanner.nextLine()), null);
-//            String oldAnimal =
-//                    formatter.getNameOfAnimalWithArticle(
-//                            leaf.getValue());
 
             //Below it just gets a new generated question and side, on which
             //we should add a newAnimal
             String[] array = dialogs.getFact(oldAnimal, newAnimal);
+
             Node newQuestion;
             String newFact = array[0];
             String leftOrRight = array[1];
 
-            if (oldAnimal.getParent() == null) {
+            if (oldAnimal.getParent() == null) { // Old animal was the root, so we have to change it
                 newQuestion = new Node(newFact, null);
                 root = newQuestion;
             } else if (oldAnimal.getParent().getLeft() == oldAnimal) {
@@ -54,48 +52,25 @@ public class Tree {
 
             oldAnimal.setParent(newQuestion);
             newAnimal.setParent(newQuestion);
-            newAnimal.addAllToFacts(facts);
-//            Node left, right;
+
             switch (leftOrRight) {
                 case "left":
-//                    left = new Node(newAnimal, newQuestion);
-//                    right = new Node(oldAnimal, newQuestion);
                     newQuestion.setLeft(newAnimal);
                     newQuestion.setRight(oldAnimal);
                     break;
                 case "right":
-//                    left = new Node(oldAnimal, newQuestion);
                     newQuestion.setLeft(oldAnimal);
                     newQuestion.setRight(newAnimal);
-//                    right = new Node(newAnimal, newQuestion);
                     break;
                 default:
                     newQuestion.setLeft(null);
                     newQuestion.setRight(null);
                     break;
             }
-//            newQuestion.setLeft(left);
-//            newQuestion.setRight(right);
         }
     }
 
-    public Node searchForAnimal(String name, Node t) {
-        if (t != null) {
-            String nameOfNode = t.getValue();
-            if (nameOfNode.matches("(a|an)\\s" + name)) {
-                return t;
-            } else {
-                Node foundNode = searchForAnimal(name, t.getLeft());
-                if (foundNode == null) {
-                    foundNode = searchForAnimal(name, t.getRight());
-                }
-                return foundNode;
-            }
-        } else {
-            return null;
-        }
-    }
-
+    // Search for the animal and gather facts while traversing, returns false if the animal is not found
     public boolean searchAndPrint(String name, Node t, Map<String, Boolean> mapOfFacts) {
         if (t == null) {
             return false;
@@ -118,22 +93,22 @@ public class Tree {
         return false;
     }
 
-    private Node traverse(Node t, Set<String> facts) {
+    // Traverse the tree, ask the proper question at every Node
+    private Node traverse(Node t) {
         t. askQuestion();
         if (t.isQuestion()) { //Means that it is a question and node has children, we continue
             boolean choice = dialogs.getUserAnswer();
             if (choice) {
-                facts.add(formatter.getPositiveFact(t.getValue()));
-                return traverse(t.getRight(), facts);
+                return traverse(t.getRight());
             } else {
-                facts.add(formatter.getNegativeFact(t.getValue()));
-                return traverse(t.getLeft(), facts);
+                return traverse(t.getLeft());
             }
         } else { //We get to the leaf (animal) like dog, cat etc. so traverse is finished
             return t;
         }
     }
 
+    // Make a list of all animals in the tree
     private List<String> listAnimalsTraverse(Node t) {
         List<String> arrayList = new ArrayList<>();
 
@@ -154,6 +129,7 @@ public class Tree {
         return listAnimalsTraverse(root);
     }
 
+    // Prints the statistics of the tree
     public void printStatistics() {
         System.out.println("The Knowledge Tree stats\n" +
                 "");
@@ -166,14 +142,14 @@ public class Tree {
         System.out.println("- total number of animals " + numberOfAnimals);
         System.out.println("- total number of statements " + numberOfStatements);
         int maxDepth = maxDepth(root);
-        int height = maxDepth;
-        System.out.println("- height of the tree " + height);
+        System.out.println("- height of the tree " + maxDepth);
         int minDepth = minDepth(root);
         System.out.println("- minimum animal's depth " + minDepth);
         System.out.println("- average animal's depth " + (double)sumOfDepthOfLeaves(root, 0)/numberOfAnimals);
 
     }
 
+    // Get max depth
     private int maxDepth(Node t) {
         if (t == null) {
             return -1;

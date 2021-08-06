@@ -13,8 +13,9 @@ public class ClarificationQuestions {
     );
 
     public void say() {
-        System.out.println(clarificationList.get(
-                new Random().nextInt(clarificationList.size())
-        ));
+        System.out.println(
+                clarificationList.get(
+                        new Random().nextInt(clarificationList.size())
+                ));
     }
 }

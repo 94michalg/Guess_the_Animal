@@ -8,12 +8,15 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.io.File;
 import java.io.IOException;
 
+// class handles reading and saving database to the file
+// it's Singleton
 public class RepositoryDAO {
     private static final RepositoryDAO instance = new RepositoryDAO();
     private static final String FILE_NAME = "animals";
     private ObjectMapper objectMapper;
     private File file;
 
+    // sets filetype when creating the instance
     private RepositoryDAO() {
         setFileType(Main.getFileType());
     }
@@ -22,6 +25,7 @@ public class RepositoryDAO {
         return instance;
     }
 
+    // write the tree in the file
     public void writeFile(Node root) {
         try {
             objectMapper.writerWithDefaultPrettyPrinter()
@@ -31,6 +35,7 @@ public class RepositoryDAO {
         }
     }
 
+    // read the tree from the file and returns root Node
     public Node readFile() {
         try {
             if (file.exists()) {
@@ -43,6 +48,8 @@ public class RepositoryDAO {
         }
     }
 
+    // Sets correct path to the file and proper object mapper
+    // Default is "json"
     private void setFileType(String fileType) {
         switch (fileType) {
             case "xml":

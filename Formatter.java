@@ -5,12 +5,7 @@ import java.util.regex.Pattern;
 
 public class Formatter {
 
-//    private static final Formatter instance = new Formatter();
-//
-//    public static Formatter getInstance() {
-//        return instance;
-//    }
-
+    // Returns name of animal with article e.g. "a cat", "an elephant"
     public String getNameOfAnimalWithArticle(String animal) {
         String input = animal.trim().toLowerCase();
         if (input.matches("(a|an)\\s\\w+")) {
@@ -21,11 +16,13 @@ public class Formatter {
         }
     }
 
+    // Removes all articles from the animal name
     public String getNameOfAnimalWithoutArticle(String animal) {
         return animal.trim().toLowerCase().replaceAll(
                 "(\\s|\\ban\\b|\\ba\\b|\\bthe\\b)", "");
     }
 
+    // Creates proper question out of fact e.g. "Can it climb trees?"
     public String distinguishQuestion(String canHasIs, String fact) {
         switch (canHasIs) {
             case "can":
@@ -38,6 +35,7 @@ public class Formatter {
         return null;
     }
 
+    // Makes a negation out of affirmative
     public String canHasIsNegative(String can) {
         switch (can) {
             case "can":
@@ -50,50 +48,7 @@ public class Formatter {
         return null;
     }
 
-    public String getPositiveFact(String answer) {
-        Pattern pattern = Pattern.compile("^(Can it|Does it have|Is it)([^?]*)");
-        Matcher matcher = pattern.matcher(answer);
-        matcher.find();
-        String firstPart = matcher.group(1);
-        String fact = matcher.group(2);
-        StringBuilder sb = new StringBuilder();
-        switch (firstPart) {
-            case "Can it":
-                sb.append("It can");
-                break;
-            case "Does it have":
-                sb.append("It has");
-                break;
-            case "Is it":
-                sb.append("It is");
-                break;
-        }
-        sb.append(fact);
-        return sb.toString();
-    }
-
-    public String getNegativeFact(String answer) {
-        Pattern pattern = Pattern.compile("^(Can it|Does it have|Is it)([^?]*)");
-        Matcher matcher = pattern.matcher(answer);
-        matcher.find();
-        String firstPart = matcher.group(1);
-        String fact = matcher.group(2);
-        StringBuilder sb = new StringBuilder();
-        switch (firstPart) {
-            case "Can it":
-                sb.append("It can't");
-                break;
-            case "Does it have":
-                sb.append("It doesn't have");
-                break;
-            case "Is it":
-                sb.append("It isn't");
-                break;
-        }
-        sb.append(fact);
-        return sb.toString();
-    }
-
+    // Makes an affirmative or negation out of the question, depending on isTrue boolean parameter
     public String getFact(String question, boolean isTrue) {
         Pattern pattern = Pattern.compile("^(Can it|Does it have|Is it)([^?]*)");
         Matcher matcher = pattern.matcher(question);

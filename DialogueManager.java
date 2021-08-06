@@ -31,7 +31,7 @@ public class DialogueManager {
         goodbyes.sayGoodbye();
     }
 
-    // true means positive answer, false is negative
+    // Gets user answer, returns true if the answer is positive, false if negative
     public boolean getUserAnswer() {
         String input = scanner.nextLine().trim().toLowerCase();
         Pattern patYes = Pattern.compile(
@@ -53,7 +53,7 @@ public class DialogueManager {
     }
 
     // Returns array of Strings, where array[0] is generated question,
-    // array[1] is "right" or "left", it means on which side of the Node we should
+    // array[1] has String "right" or "left", it means on which side of the Node we should
     // put a new animal
     public String[] getFact(Node firstAnimal, Node secondAnimal) {
         System.out.printf("Specify a fact that distinguishes %s from %s.\n",
@@ -91,27 +91,22 @@ public class DialogueManager {
                     formatter.getNameOfAnimalWithoutArticle(firstAnimal.getValue()),
                     formatter.canHasIsNegative(canHasIs),
                     fact);
-            firstAnimal.addNewFact("It " + formatter.canHasIsNegative(canHasIs) + " " + fact);
             System.out.printf("- The %s %s %s.\n",
                     formatter.getNameOfAnimalWithoutArticle(secondAnimal.getValue()),
                     canHasIs,
                     fact);
-            secondAnimal.addNewFact("It " + canHasIs + " " + fact);
-
-        } else  {
+        } else {
             leftOrRight = "left";
             System.out.println("I have learned the following facts about animals:");
             System.out.printf("- The %s %s %s.\n",
                     formatter.getNameOfAnimalWithoutArticle(firstAnimal.getValue()),
                     canHasIs,
                     fact);
-            firstAnimal.addNewFact("It " + canHasIs + " " + fact);
 
             System.out.printf("- The %s %s %s.\n",
                     formatter.getNameOfAnimalWithoutArticle(secondAnimal.getValue()),
                     formatter.canHasIsNegative(canHasIs),
                     fact);
-            secondAnimal.addNewFact("It " + formatter.canHasIsNegative(canHasIs) + " " + fact);
 
         }
         System.out.println("I can distinguish these animals by asking the question:");
@@ -120,6 +115,7 @@ public class DialogueManager {
         return new String[]{question, leftOrRight};
     }
 
+    // Simple UI, lets user choose a proper option
     public int getChoice() {
         System.out.println("\nWhat do you want to do?\n");
         System.out.println("1. Play the guessing game\n" +

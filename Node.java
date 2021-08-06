@@ -5,27 +5,26 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "id")
 public class Node {
 
-    //value can be a question "Is it a mammal?" or just an animal like "Dog"
+    // Value can be a question "Is it a mammal?" or just an animal like "Dog"
     private String value;
     private Node parent;
     private Node left;
     private Node right;
-    private Set<String> facts;
 
+    // Returns true if it has children, which means it is a question e.g. "Is it a mammal"
+    // Returns false if it has no children, means it is an animal e.g. "cat"
     @JsonIgnore
     public boolean isQuestion() {
         return !(left == null && right == null);
     }
 
+    // If it's a question just ask it if it's an animal ask "Is it a dog?"
     @JsonIgnore
     public void askQuestion() {
         if (this.isQuestion()) {
@@ -40,21 +39,6 @@ public class Node {
         this.parent = parent;
         this.left = null;
         this.right = null;
-        this.facts = new HashSet<>();
-    }
-
-    public void addNewFact(String fact) {
-        facts.add(fact);
-    }
-
-    public void addAllToFacts(Set<String> newSet) {
-        facts.addAll(newSet);
-    }
-
-    public void printFacts() {
-        for (String s: facts) {
-            System.out.printf("- %s.\n", s);
-        }
     }
 
     //Created for proper loading from File
